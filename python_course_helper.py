@@ -21,9 +21,8 @@ class DatabaseManage(object):
         try:
             with con:
                 cur = con.cursor()
-                cur.execute(
-                    "INSERT INTO course(name, description, price, is_private)VALUES (?,?,?,?)", data
-                )
+                cur.execute("INSERT INTO course(name, description, price, is_private)VALUES (?,?,?,?)", data)
+                return True
         except Exception:
             return False
 
@@ -32,7 +31,7 @@ class DatabaseManage(object):
         try:
             with con:
                 cur = con.cursor()
-                cur.execute("SELECT * FROM courses")
+                cur.execute("SELECT * FROM course")
                 return cur.fetchall()
         except Exception:
             return False
@@ -44,6 +43,7 @@ class DatabaseManage(object):
                 cur = con.cursor()
                 sql = "DELETE FROM course WHERE id = ?"
                 cur.execute(sql, [id])
+                return True
         except Exception:
             return False
 
@@ -60,7 +60,8 @@ def main():
     db = DatabaseManage()
 
     print("#"*40)
-    print("\n:: USER MANUAL ::")
+    print("\n:: USER MANUAL ::\n")
+    print("#"*40)
     print("\n")
 
     print('Press 1. Insert a new Course\n')
@@ -87,7 +88,7 @@ def main():
         print("\n:: COURSE LIST ::")
 
         for index, item in enumerate(db.fetch_data()):
-            print("\n Sl no : " + str(index + 1))
+            print("\nSl no : " + str(index + 1))
             print("Course ID : " + str(item[0]))
             print("Course Name : " + str(item[1]))
             print("Course description : " + str(item[2]))
